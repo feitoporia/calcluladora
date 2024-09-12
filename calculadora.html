@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Calculadora</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    
+    #calculadora {
+      width: 300px;
+      margin: 50px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    #display {
+      width: 100%;
+      height: 40px;
+      margin-bottom: 20px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      font-size: 24px;
+      text-align: right;
+    }
+    
+    .botao {
+      width: 60px;
+      height: 40px;
+      margin: 5px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    
+    .botao:hover {
+      background-color: #f0f0f0;
+    }
+  </style>
+</head>
+<body>
+  <div id="calculadora">
+    <input type="text" id="display" disabled>
+    <div>
+      <button class="botao" onclick="limpar()">C</button>
+      <button class="botao" onclick="apagar()">DEL</button>
+    </div>
+    <div>
+      <button class="botao" onclick="digitar('7')">7</button>
+      <button class="botao" onclick="digitar('8')">8</button>
+      <button class="botao" onclick="digitar('9')">9</button>
+      <button class="botao" onclick="digitar('/')">/</button>
+    </div>
+    <div>
+      <button class="botao" onclick="digitar('4')">4</button>
+      <button class="botao" onclick="digitar('5')">5</button>
+      <button class="botao" onclick="digitar('6')">6</button>
+      <button class="botao" onclick="digitar('*')">*</button>
+    </div>
+    <div>
+      <button class="botao" onclick="digitar('1')">1</button>
+      <button class="botao" onclick="digitar('2')">2</button>
+      <button class="botao" onclick="digitar('3')">3</button>
+      <button class="botao" onclick="digitar('-')">-</button>
+    </div>
+    <div>
+      <button class="botao" onclick="digitar('0')">0</button>
+      <button class="botao" onclick="digitar('.')">.</button>
+      <button class="botao" onclick="digitar('+')">+</button>
+      <button class="botao" onclick="calcular()">=</button>
+    </div>
+  </div>
+  
+  <script>
+    let display = document.getElementById('display');
+    
+    function limpar() {
+      display.value = '';
+    }
+    
+    function apagar() {
+      display.value = display.value.slice(0, -1);
+    }
+    
+    function digitar(valor) {
+      display.value += valor;
+    }
+    
+    function calcular() {
+      try {
+        let resultado = eval(display.value);
+        display.value = resultado;
+      } catch (e) {
+        display.value = 'Erro';
+      }
+    }
+  </script>
+</body>
+</html>
