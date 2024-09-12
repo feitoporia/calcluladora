@@ -1,86 +1,121 @@
-<!DOCTYPE html><html><head><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
-  <title>Calculadora</title>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Calculadora Eletrônica</title>
   <style>
     body {
       font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f4f4f4;
     }
     
     #calculadora {
-      width: 300px;
-      margin: 50px auto;
+      width: 320px;
       padding: 20px;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border: 2px solid #ccc;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      background-color: #fff;
     }
     
     #display {
-      width: 100%;
-      height: 40px;
-      margin-bottom: 20px;
+      width: calc(100% - 20px);
+      height: 60px;
+      margin: 0 auto 20px auto;
       padding: 10px;
-      border: 1px solid #ccc;
-      font-size: 24px;
+      border: 2px solid #000;
+      font-size: 28px;
       text-align: right;
+      background-color: #eaeaea;
+      border-radius: 8px;
+      display: block;
+    }
+
+    .botoes {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-gap: 10px;
     }
     
     .botao {
-      width: 60px;
-      height: 40px;
-      margin: 5px;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 10px;
+      width: 100%;
+      height: 60px;
+      font-size: 20px;
+      border: none;
+      border-radius: 8px;
       cursor: pointer;
+      background-color: #f4f4f4;
+      transition: background-color 0.2s ease;
     }
-    
+
     .botao:hover {
-      background-color: #f0f0f0;
+      background-color: #e0e0e0;
+    }
+
+    .botao.funcao {
+      background-color: #c0c0c0;
+    }
+
+    .botao.igual {
+      background-color: #28a745;
+      color: white;
+      grid-column: span 2;
+    }
+
+    .botao.limpar {
+      background-color: #ff6347;
+      color: white;
+    }
+
+    .botao.limpar:hover {
+      background-color: #ff7f5e;
+    }
+
+    .botao.igual:hover {
+      background-color: #218838;
     }
   </style>
 </head>
 <body>
   <div id="calculadora">
-    <input type="text" id="display" disabled="">
-    <div>
-      <button class="botao" onclick="limpar()">C</button>
-      <button class="botao" onclick="apagar()">DEL</button>
-    </div>
-    <div>
+    <input type="text" id="display" disabled>
+    <div class="botoes">
+      <button class="botao limpar" onclick="limpar()">C</button>
+      <button class="botao funcao" onclick="apagar()">DEL</button>
+      <button class="botao funcao" onclick="digitar('%')">%</button>
+      <button class="botao funcao" onclick="digitar('/')">/</button>
+
       <button class="botao" onclick="digitar('7')">7</button>
       <button class="botao" onclick="digitar('8')">8</button>
       <button class="botao" onclick="digitar('9')">9</button>
-      <button class="botao" onclick="digitar('/')">/</button>
-    </div>
-    <div>
+      <button class="botao funcao" onclick="digitar('*')">*</button>
+
       <button class="botao" onclick="digitar('4')">4</button>
       <button class="botao" onclick="digitar('5')">5</button>
       <button class="botao" onclick="digitar('6')">6</button>
-      <button class="botao" onclick="digitar('*')">*</button>
-    </div>
-    <div>
+      <button class="botao funcao" onclick="digitar('-')">-</button>
+
       <button class="botao" onclick="digitar('1')">1</button>
       <button class="botao" onclick="digitar('2')">2</button>
       <button class="botao" onclick="digitar('3')">3</button>
-      <button class="botao" onclick="digitar('-')">-</button>
-    </div>
-    <div>
+      <button class="botao funcao" onclick="digitar('+')">+</button>
+
       <button class="botao" onclick="digitar('0')">0</button>
       <button class="botao" onclick="digitar('.')">.</button>
-      <button class="botao" onclick="digitar('+')">+</button>
-      <button class="botao" onclick="calcular()">=</button>
-    </div>
-    <div>
-      <button class="botao" onclick="digitar('sin(')">sin</button>
-      <button class="botao" onclick="digitar('cos(')">cos</button>
-      <button class="botao" onclick="digitar('tan(')">tan</button>
-      <button class="botao" onclick="digitar(')')">)</button>
-    </div>
-    <div>
-      <button class="botao" onclick="digitar('%')">%</button>
-      <button class="botao" onclick="digitar('sqrt(')">√</button>
-      <button class="botao" onclick="digitar('pow(')">^</button>
-      <button class="botao" onclick="digitar('log(')">log</button>
+      <button class="botao funcao" onclick="digitar('sqrt(')">√</button>
+      <button class="botao igual" onclick="calcular()">=</button>
+
+      <button class="botao funcao" onclick="digitar('sin(')">sin</button>
+      <button class="botao funcao" onclick="digitar('cos(')">cos</button>
+      <button class="botao funcao" onclick="digitar('tan(')">tan</button>
+      <button class="botao funcao" onclick="digitar('pow(')">^</button>
     </div>
   </div>
   
@@ -107,14 +142,22 @@
         expressao = expressao.replace(/tan/g, 'Math.tan');
         expressao = expressao.replace(/sqrt/g, 'Math.sqrt');
         expressao = expressao.replace(/pow/g, 'Math.pow');
-        expressao = expressao.replace(/log/g, 'Math.log');
+        expressao = expressao.replace(/(\d+)%/g, '($1/100)');
+
+        expressao = expressao.replace(/Math.sin\(([^)]+)\)/g, 'Math.sin($1 * Math.PI / 180)');
+        expressao = expressao.replace(/Math.cos\(([^)]+)\)/g, 'Math.cos($1 * Math.PI / 180)');
+        expressao = expressao.replace(/Math.tan\(([^)]+)\)/g, 'Math.tan($1 * Math.PI / 180)');
+        
         let resultado = eval(expressao);
-        display.value = resultado;
+        if (resultado === Infinity || isNaN(resultado)) {
+          display.value = 'Erro';
+        } else {
+          display.value = resultado;
+        }
       } catch (e) {
         display.value = 'Erro';
       }
     }
   </script>
-
-
-</body></html>
+</body>
+</html>
