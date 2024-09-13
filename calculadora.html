@@ -64,9 +64,24 @@
     }
 
     .botao.igual {
-      background-color: #28a745;
+      background: linear-gradient(135deg, #4CAF50, #81C784); /* Gradiente suave de verde */
       color: white;
+      font-weight: bold;
       grid-column: span 2;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra suave */
+      border: none;
+      transition: background 0.3s ease, transform 0.2s ease; /* Transição suave ao passar o mouse */
+    }
+
+    .botao.igual:hover {
+      background: linear-gradient(135deg, #66BB6A, #A5D6A7); /* Efeito de hover mais claro */
+      transform: scale(1.05); /* Efeito de escala ao passar o mouse */
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25); /* Aumenta a sombra ao passar o mouse */
+    }
+
+    .botao.igual:active {
+      background: linear-gradient(135deg, #388E3C, #66BB6A); /* Cor mais escura quando pressionado */
+      transform: scale(1); /* Volta ao tamanho normal quando clicado */
     }
 
     .botao.limpar {
@@ -78,9 +93,6 @@
       background-color: #ff7f5e;
     }
 
-    .botao.igual:hover {
-      background-color: #218838;
-    }
   </style>
 </head>
 <body>
@@ -109,13 +121,13 @@
 
       <button class="botao" onclick="digitar('0')">0</button>
       <button class="botao" onclick="digitar('.')">.</button>
-      <button class="botao funcao" onclick="digitar('sqrt(')">√</button>
+      <button class="botao funcao" onclick="calcularRaizQuadrada()">√</button>
       <button class="botao igual" onclick="calcular()">=</button>
 
-      <button class="botao funcao" onclick="digitar('sin(')">sin</button>
-      <button class="botao funcao" onclick="digitar('cos(')">cos</button>
-      <button class="botao funcao" onclick="digitar('tan(')">tan</button>
-      <button class="botao funcao" onclick="digitar('pow(')">^</button>
+      <button class="botao funcao" onclick="calcularSeno()">sin</button>
+      <button class="botao funcao" onclick="calcularCosseno()">cos</button>
+      <button class="botao funcao" onclick="calcularTangente()">tan</button>
+      <button class="botao funcao" onclick="calcularExponenciacao()">^</button>
     </div>
   </div>
   
@@ -137,17 +149,7 @@
     function calcular() {
       try {
         let expressao = display.value;
-        expressao = expressao.replace(/sin/g, 'Math.sin');
-        expressao = expressao.replace(/cos/g, 'Math.cos');
-        expressao = expressao.replace(/tan/g, 'Math.tan');
-        expressao = expressao.replace(/sqrt/g, 'Math.sqrt');
-        expressao = expressao.replace(/pow/g, 'Math.pow');
-        expressao = expressao.replace(/(\d+)%/g, '($1/100)');
-
-        expressao = expressao.replace(/Math.sin\(([^)]+)\)/g, 'Math.sin($1 * Math.PI / 180)');
-        expressao = expressao.replace(/Math.cos\(([^)]+)\)/g, 'Math.cos($1 * Math.PI / 180)');
-        expressao = expressao.replace(/Math.tan\(([^)]+)\)/g, 'Math.tan($1 * Math.PI / 180)');
-        
+        expressao = expressao.replace(/(\d+)%/g, '($1/100)'); // Trata porcentagem
         let resultado = eval(expressao);
         if (resultado === Infinity || isNaN(resultado)) {
           display.value = 'Erro';
@@ -158,6 +160,54 @@
         display.value = 'Erro';
       }
     }
+    
+    function calcularRaizQuadrada() {
+      let valorAtual = parseFloat(display.value);
+      if (!isNaN(valorAtual)) {
+        display.value = Math.sqrt(valorAtual);
+      } else {
+        display.value = 'Erro';
+      }
+    }
+
+    // Funções trigonométricas (sin, cos, tan) e exponenciação
+    function calcularSeno() {
+      let valorAtual = parseFloat(display.value);
+      if (!isNaN(valorAtual)) {
+        display.value = Math.sin(valorAtual * Math.PI / 180); // Converte para radianos
+      } else {
+        display.value = 'Erro';
+      }
+    }
+    
+    function calcularCosseno() {
+      let valorAtual = parseFloat(display.value);
+      if (!isNaN(valorAtual)) {
+        display.value = Math.cos(valorAtual * Math.PI / 180); // Converte para radianos
+      } else {
+        display.value = 'Erro';
+      }
+    }
+    
+    function calcularTangente() {
+      let valorAtual = parseFloat(display.value);
+      if (!isNaN(valorAtual)) {
+        display.value = Math.tan(valorAtual * Math.PI / 180); // Converte para radianos
+      } else {
+        display.value = 'Erro';
+      }
+    }
+    
+    function calcularExponenciacao() {
+      let valorAtual = parseFloat(display.value);
+      let expoente = prompt("Digite o expoente:");
+      if (!isNaN(valorAtual) && !isNaN(expoente)) {
+        display.value = Math.pow(valorAtual, parseFloat(expoente));
+      } else {
+        display.value = 'Erro';
+      }
+    }
   </script>
 </body>
 </html>
+
